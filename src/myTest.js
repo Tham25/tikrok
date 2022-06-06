@@ -1,6 +1,5 @@
-
 function myTest() {
-    alert("Hello");
+    alert('Hello');
 }
 
 export default myTest;
