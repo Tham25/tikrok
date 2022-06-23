@@ -2,7 +2,15 @@ import { useEffect, useState } from 'react';
 import Tippy from '@tippyjs/react/headless';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faCircleXmark, faSpinner, faMagnifyingGlass, faPlus } from '@fortawesome/free-solid-svg-icons';
+import {
+    faCircleXmark,
+    faSpinner,
+    faMagnifyingGlass,
+    faPlus,
+    faEllipsisVertical,
+    faEarthAsia,
+} from '@fortawesome/free-solid-svg-icons';
+import { faCircleQuestion, faKeyboard } from '@fortawesome/free-regular-svg-icons';
 
 import className from 'classnames/bind';
 import styles from './Header.module.scss';
@@ -11,18 +19,34 @@ import images from '~/assets/images';
 import { Wrapper as PopperWrapper } from '~/components/Popper';
 import AccountItem from '~/components/AccountItem';
 import Button from '~/components/Button';
+import MenuPopper from '~/components/Popper/Menu';
 
 const cx = className.bind(styles);
+
+const MENU_ITEMS = [
+    {
+        icon: <FontAwesomeIcon icon={faEarthAsia} />,
+        title: 'English',
+    },
+    {
+        icon: <FontAwesomeIcon icon={faCircleQuestion} />,
+        title: 'Feedback and help',
+        to: '/feedback',
+    },
+    {
+        icon: <FontAwesomeIcon icon={faKeyboard} />,
+        title: 'Keyboard shortcuts',
+    },
+];
 
 function Header() {
     const [searchResult, setSearchResult] = useState([]);
 
     useEffect(() => {
-        setTimeout(() => {
-            setSearchResult([1, 2, 3]);
-        }, 0);
+        // setTimeout(() => {
+        //     setSearchResult([1, 2, 3]);
+        // }, 3000);
     }, []);
-
     return (
         <header className={cx('wrapper')}>
             <div className={cx('inner')}>
@@ -59,6 +83,11 @@ function Header() {
                         Upload
                     </Button>
                     <Button primary>Log in</Button>
+                    <MenuPopper items={MENU_ITEMS}>
+                        <button className={cx('more-btn')}>
+                            <FontAwesomeIcon icon={faEllipsisVertical} />
+                        </button>
+                    </MenuPopper>
                 </div>
             </div>
         </header>
