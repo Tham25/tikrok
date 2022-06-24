@@ -20,6 +20,7 @@ import { Wrapper as PopperWrapper } from '~/components/Popper';
 import AccountItem from '~/components/AccountItem';
 import Button from '~/components/Button';
 import MenuPopper from '~/components/Popper/Menu';
+import MenuItem from '~/components/Popper/Menu/MenuItem';
 
 const cx = className.bind(styles);
 
@@ -27,6 +28,19 @@ const MENU_ITEMS = [
     {
         icon: <FontAwesomeIcon icon={faEarthAsia} />,
         title: 'English',
+        children: {
+            title: 'Language',
+            data: [
+                {
+                    code: 'en',
+                    title: 'English',
+                },
+                {
+                    code: 'vi',
+                    title: 'Tiếng Việt',
+                },
+            ],
+        },
     },
     {
         icon: <FontAwesomeIcon icon={faCircleQuestion} />,
@@ -47,6 +61,12 @@ function Header() {
         //     setSearchResult([1, 2, 3]);
         // }, 3000);
     }, []);
+
+    //handle logic
+    const hanldeMenuChange = (menuItem) => {
+        // console.log(menuItem);
+    };
+
     return (
         <header className={cx('wrapper')}>
             <div className={cx('inner')}>
@@ -83,7 +103,7 @@ function Header() {
                         Upload
                     </Button>
                     <Button primary>Log in</Button>
-                    <MenuPopper items={MENU_ITEMS}>
+                    <MenuPopper items={MENU_ITEMS} onChange={hanldeMenuChange}>
                         <button className={cx('more-btn')}>
                             <FontAwesomeIcon icon={faEllipsisVertical} />
                         </button>
