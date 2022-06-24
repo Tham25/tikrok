@@ -1,5 +1,9 @@
 import { useEffect, useState } from 'react';
-import Tippy from '@tippyjs/react/headless';
+import HeadlessTippy from '@tippyjs/react/headless';
+import Tippy from '@tippyjs/react';
+import 'tippy.js/dist/tippy.css';
+import { BiMessageAltMinus } from 'react-icons/bi';
+import { HiOutlinePaperAirplane } from 'react-icons/hi';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
@@ -20,7 +24,6 @@ import { Wrapper as PopperWrapper } from '~/components/Popper';
 import AccountItem from '~/components/AccountItem';
 import Button from '~/components/Button';
 import MenuPopper from '~/components/Popper/Menu';
-import MenuItem from '~/components/Popper/Menu/MenuItem';
 
 const cx = className.bind(styles);
 
@@ -55,6 +58,7 @@ const MENU_ITEMS = [
 
 function Header() {
     const [searchResult, setSearchResult] = useState([]);
+    const currentUser = true;
 
     useEffect(() => {
         // setTimeout(() => {
@@ -71,7 +75,7 @@ function Header() {
         <header className={cx('wrapper')}>
             <div className={cx('inner')}>
                 <img alt="TikTok" src={images.logo} />
-                <Tippy
+                <HeadlessTippy
                     interactive
                     visible={searchResult.length > 0}
                     render={(attrs) => (
@@ -97,16 +101,45 @@ function Header() {
                             <FontAwesomeIcon icon={faMagnifyingGlass} />
                         </button>
                     </div>
-                </Tippy>
-                <div className={cx('action')}>
+                </HeadlessTippy>
+                <div className={cx('actions')}>
                     <Button to="/upload" upload leftIcon={<FontAwesomeIcon icon={faPlus} />}>
                         Upload
                     </Button>
-                    <Button primary>Log in</Button>
+                    {currentUser ? (
+                        <>
+                            <Tippy content="Message" placement="bottom">
+                                <button className={cx('action-btn')} style={{ height: 36 }}>
+                                    <HiOutlinePaperAirplane style={{ transform: 'rotate(60deg)' }} />
+                                </button>
+                            </Tippy>
+
+                            <Tippy trigger="click" content="Inbox" placement="bottom">
+                                <button className={cx('action-btn')}>
+                                    <BiMessageAltMinus />
+                                </button>
+                            </Tippy>
+                        </>
+                    ) : (
+                        <>
+                            <Button primary>Log in</Button>
+                        </>
+                    )}
                     <MenuPopper items={MENU_ITEMS} onChange={hanldeMenuChange}>
-                        <button className={cx('more-btn')}>
-                            <FontAwesomeIcon icon={faEllipsisVertical} />
-                        </button>
+                        {currentUser ? (
+                            <button style={{ marginLeft: 24 }}>
+                                <img
+                                    style={{ width: 40, height: 40 }}
+                                    src="https://genk.mediacdn.vn/2018/7/17/photo-2-15318129069321649618309.jpg"
+                                    className={cx('user-avatar')}
+                                    alt="thamlth"
+                                ></img>
+                            </button>
+                        ) : (
+                            <button className={cx('more-btn')}>
+                                <FontAwesomeIcon icon={faEllipsisVertical} />
+                            </button>
+                        )}
                     </MenuPopper>
                 </div>
             </div>

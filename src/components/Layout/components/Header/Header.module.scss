@@ -95,10 +95,24 @@
 }
 
 //Phan` action
+.actions {
+    display: flex;
+    align-items: center;
+}
+
 .more-btn {
     font-size: 2rem;
     margin-left: 20px;
     padding: 8px;
     background-color: transparent;
     cursor: pointer;
+}
+
+.action-btn {
+    cursor: pointer;
+    background-color: transparent;
+    color: #161823;
+    height: 26px;
+    margin-left: 24px;
+    font-size: 2.6rem;
 }
